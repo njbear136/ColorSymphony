@@ -8,9 +8,19 @@ export default function ColorCanvas() {
   const [lineWidth, setLineWidth] = useState(5);
   const [eraserSize, setEraserSize] = useState(20);
   const [usingEraser, setUsingEraser] = useState(false);
-  const audioRef = useRef(null);
+  const audioRefs = useRef({}); // store preloaded audio objects
 
   const defaultSong = "sounds/Hitori no Yoru (2).mp3";
+
+  const colorCategorySongMap = {
+    red: "sounds/Elvis Presley - Can't Help Falling in Love.mp3",
+    green: "sounds/Green Tea & Honey.mp3",
+    darkblue: "sounds/yung kai - blue (with MINNIE).mp3",
+    skyblue: "sounds/Ocean View (feat. Kelsey Kuan & prettyhappy).mp3",
+    purple: "sounds/Surfing in the Moonlight.mp3",
+    pink: "sounds/My Love Mine All Mine.mp3",
+    default: defaultSong,
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -19,9 +29,12 @@ export default function ColorCanvas() {
 
     initAudio();
 
-    // Preload all songs
-    audioRef.current = new Audio();
-    audioRef.current.loop = true;
+    // Preload all audio files
+    Object.keys(colorCategorySongMap).forEach((key) => {
+      const audio = new Audio(colorCategorySongMap[key]);
+      audio.loop = true;
+      audioRefs.current[key] = audio;
+    });
   }, []);
 
   const getColorCategory = (hex) => {
@@ -38,30 +51,21 @@ export default function ColorCanvas() {
     return "default";
   };
 
-  const colorCategorySongMap = {
-    red: "sounds/Elvis Presley - Can't Help Falling in Love.mp3",
-    green: "sounds/Green Tea & Honey.mp3",
-    darkblue: "sounds/yung kai - blue (with MINNIE).mp3",
-    skyblue: "sounds/Ocean View (feat. Kelsey Kuan & prettyhappy).mp3",
-    purple: "sounds/Surfing in the Moonlight.mp3",
-    pink: "sounds/My Love Mine All Mine.mp3",
-    default: defaultSong,
-  };
-
   const playSongByColor = (hexColor) => {
     const category = getColorCategory(hexColor);
-    const songPath = colorCategorySongMap[category];
 
-    if (!audioRef.current.src.includes(songPath)) {
-      audioRef.current.pause();
-      audioRef.current.src = songPath;
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch((e) => {
-        // Avoid autoplay errors
-        console.log("Audio play blocked: ", e);
-      });
-    } else if (audioRef.current.paused) {
-      audioRef.current.play().catch((e) => console.log(e));
+    // pause all other songs
+    Object.keys(audioRefs.current).forEach((key) => {
+      if (key !== category && audioRefs.current[key]) {
+        audioRefs.current[key].pause();
+        audioRefs.current[key].currentTime = 0;
+      }
+    });
+
+    // play the selected song
+    const song = audioRefs.current[category];
+    if (song && song.paused) {
+      song.play().catch((e) => console.log("Audio play blocked:", e));
     }
   };
 
@@ -96,7 +100,9 @@ export default function ColorCanvas() {
     ctx.closePath();
     setIsDrawing(false);
 
-    if (!usingEraser && audioRef.current) audioRef.current.pause();
+    if (!usingEraser) {
+      Object.values(audioRefs.current).forEach((a) => a.pause());
+    }
   };
 
   const clearCanvas = () => {
@@ -104,12 +110,11 @@ export default function ColorCanvas() {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Stop any playing audio but don't restart default song
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      audioRef.current.src = "";
-    }
+    // stop all songs without playing default
+    Object.values(audioRefs.current).forEach((a) => {
+      a.pause();
+      a.currentTime = 0;
+    });
   };
 
   return (
