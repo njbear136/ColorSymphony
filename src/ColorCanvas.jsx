@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { initAudio } from "./Soundinteraction";
 
 export default function ColorCanvas() {
@@ -22,7 +22,13 @@ export default function ColorCanvas() {
     default: defaultSong,
   };
 
-  // Categorize colors
+  // Set canvas size once on mount
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    canvas.width = canvas.parentElement.offsetWidth * 0.9;
+    canvas.height = window.innerHeight * 0.6;
+  }, []);
+
   const getColorCategory = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -57,23 +63,12 @@ export default function ColorCanvas() {
   };
 
   const startDrawing = (e) => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvasRef.current.getContext("2d");
     ctx.beginPath();
     ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     setIsDrawing(true);
 
-    // Start audio on first gesture only
-    if (!usingEraser) {
-      if (!audioRef.current) {
-        const songPath = colorCategorySongMap[getColorCategory(color)];
-        audioRef.current = new Audio(songPath);
-        audioRef.current.loop = true;
-        audioRef.current.play();
-      } else {
-        playSongByColor(color);
-      }
-    }
+    if (!usingEraser) playSongByColor(color);
   };
 
   const draw = (e) => {
@@ -97,23 +92,14 @@ export default function ColorCanvas() {
     const ctx = canvasRef.current.getContext("2d");
     ctx.closePath();
     setIsDrawing(false);
-    if (!usingEraser && audioRef.current) audioRef.current.pause();
+    // Do NOT pause audio here
   };
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Do NOT play audio when clearing
-  };
-
-  // Set canvas size on render
-  const handleCanvasRef = (canvas) => {
-    if (canvas) {
-      canvasRef.current = canvas;
-      canvas.width = canvas.parentElement.offsetWidth * 0.9;
-      canvas.height = window.innerHeight * 0.6;
-    }
+    // NO audio play when clearing canvas
   };
 
   return (
@@ -167,7 +153,7 @@ export default function ColorCanvas() {
       </div>
 
       <canvas
-        ref={handleCanvasRef}
+        ref={canvasRef}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
@@ -195,4 +181,3 @@ export default function ColorCanvas() {
     </div>
   );
 }
-
