@@ -1,0 +1,119 @@
+:root {
+  background-color: #FFD6C2;
+  color: #1e293b;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  background-color: #FFD6C2;
+}
+
+/* Fullscreen soft container */
+.app-background {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+  background-color: #FFD6C2;
+}
+
+.app-wrap {
+  width: 100%;
+  max-width: 3000px;
+  background: #FFF3AD;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #333;
+}
+
+.lead {
+  color: #555;
+  margin-top: 5px;
+}
+
+/* Canvas Area */
+.canvas-container {
+  background-color: #FCF5C7;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.canvas-container h1 {
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: 700;
+}
+
+.canvas-container canvas {
+  border: 2px solid #B6F7BD;
+  border-radius: 15px;
+  background-color: white;
+  cursor:crosshair;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Controls */
+.controls {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.controls input[type="color"] {
+  border: none;
+  background: none;
+  cursor: pointer;
+  height: 35px;
+  width: 35px;
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+}
+
+.clear-btn {
+  background-color: #fcbad3;
+}
+.clear-btn:hover {
+  background-color: #f9a5c0;
+}
+
+.save-btn {
+  background-color: #a7d8ff;
+}
+.save-btn:hover {
+  background-color: #8ecbfa;
+}
