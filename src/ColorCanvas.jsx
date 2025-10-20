@@ -10,7 +10,6 @@ export default function ColorCanvas() {
   const [usingEraser, setUsingEraser] = useState(false);
   const audioRef = useRef(null);
 
-  // GitHub Pages–ready paths
   const defaultSong = "sounds/Hitori no Yoru (2).mp3";
 
   const colorCategorySongMap = {
@@ -104,12 +103,10 @@ export default function ColorCanvas() {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Restart default song
+    // Stop any playing song
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
-      audioRef.current.src = defaultSong;
-      audioRef.current.play();
     }
   };
 

@@ -14,7 +14,7 @@ export default function App(){
       <ColorCanvas />
 
       <div style={{marginTop:18}}>
-        <small> Tip: Clcik or drag on the canvas to draw.</small></div>
+        <small> Tip: Click or drag on the canvas to draw.</small></div>
         <div>Disclaimer: Only these colors play different songs when used: pink, red, green, dark blue, sky blue, purple.</div>
         <div>Pink: My love mine all mine by Mitski</div>
         <div>Red: Can't help falling in love by Elvis Presley</div>
