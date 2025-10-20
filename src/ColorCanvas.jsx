@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { initAudio } from "./Soundinteraction";
 
 export default function ColorCanvas() {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = useState("#f4064d"); // default brush color
+  const [color, setColor] = useState("#f4064d");
   const [lineWidth, setLineWidth] = useState(5);
   const [eraserSize, setEraserSize] = useState(20);
   const [usingEraser, setUsingEraser] = useState(false);
@@ -22,17 +22,7 @@ export default function ColorCanvas() {
     default: defaultSong,
   };
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    canvas.width = canvas.parentElement.offsetWidth * 0.9;
-    canvas.height = window.innerHeight * 0.6;
-
-    initAudio();
-
-    audioRef.current = new Audio(defaultSong);
-    audioRef.current.loop = true;
-  }, []);
-
+  // Categorize colors
   const getColorCategory = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -67,11 +57,23 @@ export default function ColorCanvas() {
   };
 
   const startDrawing = (e) => {
-    const ctx = canvasRef.current.getContext("2d");
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
     ctx.beginPath();
     ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     setIsDrawing(true);
-    if (!usingEraser) playSongByColor(color);
+
+    // Start audio on first gesture only
+    if (!usingEraser) {
+      if (!audioRef.current) {
+        const songPath = colorCategorySongMap[getColorCategory(color)];
+        audioRef.current = new Audio(songPath);
+        audioRef.current.loop = true;
+        audioRef.current.play();
+      } else {
+        playSongByColor(color);
+      }
+    }
   };
 
   const draw = (e) => {
@@ -95,18 +97,22 @@ export default function ColorCanvas() {
     const ctx = canvasRef.current.getContext("2d");
     ctx.closePath();
     setIsDrawing(false);
-    if (!usingEraser) audioRef.current.pause();
+    if (!usingEraser && audioRef.current) audioRef.current.pause();
   };
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Do NOT play audio when clearing
+  };
 
-    // Stop any playing song
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+  // Set canvas size on render
+  const handleCanvasRef = (canvas) => {
+    if (canvas) {
+      canvasRef.current = canvas;
+      canvas.width = canvas.parentElement.offsetWidth * 0.9;
+      canvas.height = window.innerHeight * 0.6;
     }
   };
 
@@ -161,7 +167,7 @@ export default function ColorCanvas() {
       </div>
 
       <canvas
-        ref={canvasRef}
+        ref={handleCanvasRef}
         onMouseDown={startDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
@@ -189,3 +195,4 @@ export default function ColorCanvas() {
     </div>
   );
 }
+
