@@ -11,17 +11,17 @@ export default function ColorCanvas() {
   const audioRef = useRef(null);
 
   // GitHub Pages–ready paths
-  const defaultSong = "/ColorSymphony/public/sounds/Hitori no Yoru (2).mp3";
+  const defaultSong = "sounds/Hitori no Yoru (2).mp3";
 
-  const colorCategorySongMap = {
-    red: "/ColorSymphony/public/sounds/Elvis Presley - Can't Help Falling in Love.mp3",
-    green: "/ColorSymphony/public/sounds/Green Tea & Honey.mp3",
-    darkblue: "/ColorSymphony/public/sounds/yung kai - blue (with MINNIE).mp3",
-    skyblue: "/ColorSymphony/public/sounds/Ocean View (feat. Kelsey Kuan & prettyhappy).mp3",
-    purple: "/ColorSymphony/public/sounds/Surfing in the Moonlight.mp3",
-    pink: "/ColorSymphony/public/sounds/My Love Mine All Mine.mp3",
-    default: defaultSong,
-  };
+const colorCategorySongMap = {
+  red: "sounds/Elvis Presley - Can't Help Falling in Love.mp3",
+  green: "sounds/Green Tea & Honey.mp3",
+  darkblue: "sounds/yung kai - blue (with MINNIE).mp3",
+  skyblue: "sounds/Ocean View (feat. Kelsey Kuan & prettyhappy).mp3",
+  purple: "sounds/Surfing in the Moonlight.mp3",
+  pink: "sounds/My Love Mine All Mine.mp3",
+  default: defaultSong,
+};
 
   useEffect(() => {
     const canvas = canvasRef.current;
