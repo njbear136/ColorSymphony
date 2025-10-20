@@ -10,7 +10,18 @@ export default function ColorCanvas() {
   const [usingEraser, setUsingEraser] = useState(false);
   const audioRef = useRef(null);
 
+  // GitHub Pages–ready paths
   const defaultSong = "/ColorSymphony/sounds/Hitori no Yoru (2).mp3";
+
+  const colorCategorySongMap = {
+    red: "/ColorSymphony/sounds/Elvis Presley - Can't Help Falling in Love.mp3",
+    green: "/ColorSymphony/sounds/Green Tea & Honey.mp3",
+    darkblue: "/ColorSymphony/sounds/yung kai - blue (with MINNIE).mp3",
+    skyblue: "/ColorSymphony/sounds/Ocean View (feat. Kelsey Kuan & prettyhappy).mp3",
+    purple: "/ColorSymphony/sounds/Surfing in the Moonlight.mp3",
+    pink: "/ColorSymphony/sounds/My Love Mine All Mine.mp3",
+    default: defaultSong,
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -23,7 +34,6 @@ export default function ColorCanvas() {
     audioRef.current.loop = true;
   }, []);
 
-  // categorize colors
   const getColorCategory = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -35,21 +45,8 @@ export default function ColorCanvas() {
     if (r < 30 && g > 120 && b < 245) return "skyblue";
     if (r > 100 && g < 50 && b > 155) return "purple";
     if (r > 200 && g < 150 && b > 30) return "pink";
-
     return "default";
   };
-
-  // Mapping colors to songs
- const colorCategorySongMap = {
-  red: "/ColorSymphony/sounds/Elvis Presley - Can't Help Falling in Love.mp3",
-  green: "/ColorSymphony/sounds/Green Tea & Honey.mp3",
-  darkblue: "/ColorSymphony/sounds/yung kai - blue (with MINNIE).mp3",
-  skyblue: "/ColorSymphony/sounds/Ocean View (feat. Kelsey Kuan & prettyhappy).mp3",
-  purple: "/ColorSymphony/sounds/Surfing in the Moonlight.mp3",
-  pink: "/ColorSymphony/sounds/My Love Mine All Mine.mp3",
-  default: defaultSong,
-};
-
 
   const playSongByColor = (hexColor) => {
     const category = getColorCategory(hexColor);
@@ -107,7 +104,7 @@ export default function ColorCanvas() {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Restart all songs
+    // Restart default song
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
