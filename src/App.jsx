@@ -19,7 +19,7 @@ export default function App(){
         <div>Pink: My love mine all mine by Mitski</div>
         <div>Red: Can't help falling in love by Elvis Presley</div>
         <div>Green: Green Tea & Honey by Dane Amar and Jereena Montemayor</div>
-        <div>Dakr Blue: Blue by yung kai, feat. MINNIE</div>
+        <div>Dark Blue: Blue by yung kai, feat. MINNIE</div>
         <div>Sky Blue: Ocean View by Dept, feat. Kelsey Kuan and prettyhappy</div>
         <div>Purple: Surfing in the Moonlight by TOMORROW X TOGETHER</div>
         <div><small>The other colors play one default song:D | Hitori no Yoru by TOMORROW X TOGETHER</small></div>
