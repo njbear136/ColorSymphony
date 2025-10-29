@@ -10,15 +10,15 @@ export default function ColorCanvas() {
   const [usingEraser, setUsingEraser] = useState(false);
   const audioRefs = useRef({}); // store preloaded audio objects
 
-  const defaultSong = "public/sounds/Hitori no Yoru (2).mp3";
+  const defaultSong = "sounds/Hitori no Yoru (2).mp3";
 
   const colorCategorySongMap = {
-    red: "public/sounds/Elvis Presley - Can't Help Falling in Love.mp3",
-    green: "public/sounds/Green Tea & Honey.mp3",
-    darkblue: "public/sounds/yung kai - blue (with MINNIE).mp3",
-    skyblue: "public/sounds/Ocean View (feat. Kelsey Kuan & prettyhappy).mp3",
-    purple: "public/sounds/Surfing in the Moonlight.mp3",
-    pink: "public/sounds/My Love Mine All Mine.mp3",
+    red: "sounds/Elvis Presley - Can't Help Falling in Love.mp3",
+    green: "sounds/Green Tea & Honey.mp3",
+    darkblue: "sounds/yung kai - blue (with MINNIE).mp3",
+    skyblue: "sounds/Ocean View (feat. Kelsey Kuan & prettyhappy).mp3",
+    purple: "sounds/Surfing in the Moonlight.mp3",
+    pink: "sounds/My Love Mine All Mine.mp3",
     default: defaultSong,
   };
 
