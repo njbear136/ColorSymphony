@@ -8,3 +8,6 @@ Made by NJ Color Symphony -> “Where every color sings its own story.” Only w
 DEMO: 
 https://njbear136.github.io/ColorSymphony/
 
+PREVIEW SCREENSHOT: <img width="687" height="529" alt="image" src="https://github.com/user-attachments/assets/c69aea90-55da-49af-8d74-71bee16f6d3e" />
+
+
