@@ -9,5 +9,5 @@ DEMO:
 https://njbear136.github.io/ColorSymphony/
 
 
-PREVIEW SCREENSHOT: /<img width="687" height="529" alt="Screenshot 2025-11-14 194057" src="https://github.com/user-attachments/assets/bad92f9e-760a-4dd2-807f-859afbbe03b8" />
+PREVIEW SCREENSHOT: <img width="687" height="529" alt="Screenshot 2025-11-14 194057" src="https://github.com/user-attachments/assets/bad92f9e-760a-4dd2-807f-859afbbe03b8" />
 
